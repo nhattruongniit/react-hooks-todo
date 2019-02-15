@@ -1,28 +1,31 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
+import Typography from '@material-ui/core/Typography';
+
+import TodoForm from './TodoForm';
+import TodoList from './TodoList';
+import useTodoState from './useTodoState';
+
+const App = () => {
+  const  {todos, addTodo, deleteTodo} = useTodoState([]);
+  
+  const handleSaveTodo = (e) => {
+    const textTrim = e.trim();
+    if(textTrim.length) {
+      addTodo(textTrim);
+    }
   }
+
+  return (
+    <div className="App">
+      <Typography component="h1" variant="h2">
+        Todos List Hooks
+      </Typography>
+      <TodoForm saveTodo={handleSaveTodo} />
+      <TodoList todos={todos} deleteTodo={deleteTodo} />
+    </div>
+  );
 }
 
 export default App;
