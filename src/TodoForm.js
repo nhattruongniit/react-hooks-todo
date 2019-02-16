@@ -5,12 +5,12 @@ import Button from '@material-ui/core/Button';
 
 import useInputState from './useInputState';
 
-const TodoForm = ({ saveTodo }) => {
+const TodoForm = ({ addTodo }) => {
   const { value, onChange, reset } = useInputState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    saveTodo(value);
+    addTodo(value);
     reset();
   }
 
