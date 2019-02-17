@@ -4,6 +4,9 @@ export default initialValue => {
   const [todos, setTodos] = useState(initialValue);
 
   return {
+    initTodo: () => {
+      setTodos(todos);
+    },
     addTodo: todoText => {
       setTodos([...todos, todoText]);
     },
