@@ -16,10 +16,10 @@ const App = () => {
   const { todos, initTodo, addTodo, deleteTodo, completedTodo } = HooksTodo([]);
   const [ isError, setIsError ] = useState(false);
   const [ { loading }, dispatch ] = useReducer(LoadingReducer, { loading: false });
-  
+
   const fetchData = async () => {
     try{
-      const result = await axios.get('https://jsonplaceholder.typicode.com/todos?_limit=5');
+      const result = await axios.get('https://jsonplaceholder.typicode.com/todos?_limit=30');
       initTodo(result.data);
     } catch(err) {
       setIsError(true);
@@ -40,6 +40,7 @@ const App = () => {
     });
     addTodo(data);
     dispatch({ type: 'HIDDEN_LOADING' });
+    window.scrollTo(0, document.documentElement.offsetHeight);
   };
 
   const handleDeleteTodo = id => deleteTodo(id);
