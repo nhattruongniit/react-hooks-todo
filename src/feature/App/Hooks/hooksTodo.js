@@ -19,6 +19,6 @@ export default initialValue => {
       const newTodos = [...todos];
       newTodos[id].completed = !newTodos[id].completed
       setTodos(newTodos);
-    }
+    },
   }
 };

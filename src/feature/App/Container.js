@@ -14,21 +14,15 @@ import { CircularIndeterminate } from 'feature';
 
 const App = () => {
   const { todos, initTodo, addTodo, deleteTodo, completedTodo } = HooksTodo([]);
-  const [ isError, setIsError ] = useState(false);
   const [ { loading }, dispatch ] = useReducer(LoadingReducer, { loading: false });
 
   const fetchData = async () => {
-    try{
-      const result = await axios.get('https://jsonplaceholder.typicode.com/todos?_limit=30');
-      initTodo(result.data);
-    } catch(err) {
-      setIsError(true);
-    };
+    const result = await axios.get('https://jsonplaceholder.typicode.com/todos?_limit=30');
+    initTodo(result.data);
     dispatch({ type: 'HIDDEN_LOADING' });
   };
 
   useEffect(() => {
-    dispatch({ type: 'SHOW_LOADING' });
     fetchData();
   }, []);
 
@@ -40,12 +34,39 @@ const App = () => {
     });
     addTodo(data);
     dispatch({ type: 'HIDDEN_LOADING' });
-    window.scrollTo(0, document.documentElement.offsetHeight);
   };
 
   const handleDeleteTodo = id => deleteTodo(id);
 
   const handleCompleteTodo = id => completedTodo(id);
+
+  // Infinity scroll
+  const [ isFetching, setIsFetching ] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () =>  window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    if (!isFetching) return;
+    fetchMoreItems();
+  }, [isFetching]);
+
+  const fetchMoreItems = () => {
+    setTimeout(async () => {
+      const data = {
+        title: `moreItem`,
+        completed: false,
+      }
+      addTodo(data);
+      setIsFetching(false);
+    }, 2000)
+  }
+  const handleScroll = () => {
+    if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return;
+    setIsFetching(true);
+  }
 
   return (
     <div className="App">
@@ -53,15 +74,15 @@ const App = () => {
         Todos List Hooks
       </Typography>
       { loading && <CircularIndeterminate />}
-      <div>
+      <>
         <TodoForm addTodo={handleAddTodo} />
         <TodoList 
           todos={todos} 
           deleteTodo={handleDeleteTodo} 
           completeTodo={handleCompleteTodo} 
         />
-      </div>
-      { isError && <div>Something went wrong ....</div>}
+         {isFetching && 'Fetching more list items...'}
+      </>
     </div>
   );
 }
