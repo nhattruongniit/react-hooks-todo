@@ -31,3 +31,39 @@
     transform: rotate(360deg);
   }
 }
+
+
+.buttonMaterial button + button {
+  margin-left: 10px;
+}
+
+
+.buttonMaterial button {
+  min-width: 120px;
+}
+
+
+.btn-completed {
+  background-color: #119c11 !important;
+}
+
+.loading::before {
+  content: '';
+  background-color:#000;
+  opacity: 0.5;
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.loading-child {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  left: 50%;
+  transform: translate(-20px, -20px);
+  
+}

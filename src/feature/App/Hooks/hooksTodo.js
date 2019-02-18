@@ -4,15 +4,21 @@ export default initialValue => {
   const [todos, setTodos] = useState(initialValue);
 
   return {
-    initTodo: () => {
-      setTodos(todos);
+    todos,
+    initTodo: todoList => {
+      setTodos(todoList)
     },
-    addTodo: todoText => {
-      setTodos([...todos, todoText]);
+    addTodo: todo => {
+      setTodos([...todos, todo]);
     },
     deleteTodo: id => {
       const newTodos = todos.filter((_, index) => index !== id);
       setTodos(newTodos);
     },
+    completedTodo: id => {
+      const newTodos = [...todos];
+      newTodos[id].completed = !newTodos[id].completed
+      setTodos(newTodos);
+    }
   }
 };

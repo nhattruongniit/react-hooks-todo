@@ -3,10 +3,10 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-import useInputState from './useInputState';
+import hooksTodoForm from './Hooks/hooksTodoForm';
 
 const TodoForm = ({ addTodo }) => {
-  const { value, onChange, reset } = useInputState('');
+  const { value, onChange, reset } = hooksTodoForm('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
