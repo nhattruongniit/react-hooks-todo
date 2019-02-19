@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import Typography from '@material-ui/core/Typography';
 
-import HooksTodo from './Hooks/hooksTodo';
+import useStateTodo from './Hooks/useStateTodo';
 
 import {
   TodoForm,
@@ -13,7 +13,7 @@ import LoadingReducer from '../Loading/Redux/reducer';
 import { CircularIndeterminate } from 'feature';
 
 const App = () => {
-  const { todos, initTodo, addTodo, deleteTodo, completedTodo } = HooksTodo([]);
+  const { todos, initTodo, addTodo, deleteTodo, completedTodo } = useStateTodo([]);
   const [ { loading }, dispatch ] = useReducer(LoadingReducer, { loading: false });
 
   const fetchData = async () => {
