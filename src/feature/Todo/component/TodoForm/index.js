@@ -3,9 +3,9 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-import useStateTodoForm from './Hooks/useStateTodoForm';
+import useStateTodoForm from '../../hooks/useStateTodoForm';
 
-const TodoForm = ({ addTodo }) => {
+export const TodoForm = ({ addTodo }) => {
   const { value, onChange, reset } = useStateTodoForm('');
 
   const handleSubmit = (e) => {
@@ -32,5 +32,3 @@ const TodoForm = ({ addTodo }) => {
     </form>
   )
 };
-
-export default TodoForm;

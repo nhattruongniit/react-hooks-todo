@@ -1,7 +1,2 @@
-import App from './App';
-import CircularIndeterminate from './Loading';
-
-export {
-  App,
-  CircularIndeterminate,
-};
+export * from './App';
+export * from './Todo';

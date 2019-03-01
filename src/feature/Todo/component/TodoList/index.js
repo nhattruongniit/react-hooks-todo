@@ -4,7 +4,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
 
-const TodoList = ({ todos, deleteTodo, completeTodo }) => (
+export const TodoList = ({ todos, deleteTodo, completeTodo }) => (
   <List>
     {todos.map((todo, index) => (
       <ListItem key={index.toString()} dense button>
@@ -34,5 +34,3 @@ const TodoList = ({ todos, deleteTodo, completeTodo }) => (
     ))}
   </List>
 );
-
-export default TodoList;
