@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useReducer } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import axios from 'axios';
 import Typography from '@material-ui/core/Typography';
 
@@ -7,20 +9,26 @@ import useStateTodo from './hooks/useStateTodo';
 import Loading from 'feature/Loading';
 
 import { loadingReducer } from '../Loading/redux/reducer';
+import { fetchTodo, todoSuccess } from './redux/action';
 
-export const Todo = () => {
+const Todo = ({ fetchTodo, todoSuccess, data }) => {
   const { todos, initTodo, addTodo, deleteTodo, completedTodo } = useStateTodo([]);
   const [ { loading }, dispatch ] = useReducer(loadingReducer, { loading: false });
 
+  const callbackApi = () => axios.get('https://jsonplaceholder.typicode.com/todos?_limit=20');
+
   const fetchData = async () => {
-    const result = await axios.get('https://jsonplaceholder.typicode.com/todos?_limit=30');
-    initTodo(result.data);
-    dispatch({ type: 'HIDDEN_LOADING' });
+    const dataFromFetch = await fetchTodo(() => callbackApi());
+    todoSuccess(dataFromFetch);
   };
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+    initTodo(data);
+  }, [data]);
 
   const handleAddTodo = async (title) => {
     dispatch({ type: 'SHOW_LOADING' });
@@ -82,3 +90,18 @@ export const Todo = () => {
     </>
   )
 }
+
+const mapStateToProps = ({
+  todo: { data },
+}) => ({
+  data,
+})
+
+const mapDispatchToProps = dispatch => (
+  bindActionCreators({
+    fetchTodo,
+    todoSuccess,
+  }, dispatch)
+)
+
+export default connect(mapStateToProps, mapDispatchToProps)(Todo);
